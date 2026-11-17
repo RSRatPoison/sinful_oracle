@@ -2,6 +2,26 @@
 
 **Confess your desires. Tempt your fate.**
 
+> [!NOTE]
+> **Artwork status:** Any AI-generated images currently shown in this repository are temporary placeholders only. They are not intended to represent the project's final visual identity or artwork.
+
+## Looking for artists 🖤
+
+![AI-generated temporary placeholder banner — seeking human artist contributions](priv/static/images/sinful-oracle-banner-placeholder.png)
+
+We would love to collaborate with human artists to create original artwork for **Sinful Oracle**.
+
+We're especially interested in artists who enjoy gothic, occult, dark-romantic, queer, and tarot-inspired visual styles. Potential contributions include:
+
+- A distinctive project logo and repository banner
+- Original tarot card illustrations and card backs
+- Website illustrations, ornaments, and visual details
+
+**Human-made artwork is the goal for the finished project.** All AI-generated images currently in the repository are placeholders and will be replaced as original artwork becomes available.
+
+If you're interested, please open an issue or start a discussion before creating work, so we can agree on the brief, attribution, licensing, and how the artwork will be used. Contributions should be original work, or work you have the rights to share under an agreed license. Artists will always be credited.
+
+
 Sinful Oracle is a gothic, queer-inclusive, adult-themed fictional oracle built with Elixir, Phoenix, and LiveView.
 
 ## Principles
