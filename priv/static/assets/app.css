@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&display=swap');
+
+:root {
+  color-scheme: dark;
+  --ink: #100b13;
+  --panel: #1b121e;
+  --panel-light: #26182a;
+  --plum: #4b2850;
+  --rose: #d18aaa;
+  --pale: #f2e8ef;
+  --muted: #b8a6b6;
+  --gold: #c7a56a;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0; min-height: 100vh; color: var(--pale);
+  background: radial-gradient(ellipse at 50% 0%, #38213c 0%, #17101b 44%, var(--ink) 78%);
+  font-family: 'DM Sans', sans-serif;
+}
+.page-shell { width: min(920px, calc(100% - 40px)); margin: auto; }
+.topbar { display:flex; justify-content:space-between; align-items:center; padding:28px 0; border-bottom:1px solid #ffffff18; }
+.wordmark { color:var(--pale); text-decoration:none; letter-spacing:.16em; font:600 15px 'Cinzel',serif; }
+.wordmark em { color:var(--rose); font-style:normal; }
+.age-mark,.eyebrow,.card-category,.prompt-label { letter-spacing:.2em; font-size:10px; color:var(--gold); }
+.age-mark { color:var(--muted); }
+.hero { text-align:center; padding:76px 12px 48px; }
+.hero h1 { font:500 clamp(38px,7vw,66px)/1.13 'Cinzel',serif; margin:20px 0; }
+.hero h1 span { color:var(--rose); font-style:italic; }
+.intro { max-width:560px; margin:0 auto; color:var(--muted); line-height:1.8; }
+.oracle-panel { max-width:620px; margin:0 auto; padding:30px; background:linear-gradient(145deg,#26182aee,#171019f2); border:1px solid #c7a56a55; box-shadow:0 24px 90px #0008; }
+.panel-heading { display:flex; justify-content:space-between; margin-bottom:28px; }
+.ornament { color:var(--rose); letter-spacing:.3em; }
+.control-group { display:grid; gap:10px; margin:20px 0; }
+.control-group label { font:13px 'Cinzel',serif; color:#e6d7e2; }
+select { width:100%; padding:14px; color:var(--pale); background:#120d16; border:1px solid #76546f; border-radius:2px; font:14px 'DM Sans',sans-serif; }
+.actions { display:flex; gap:12px; margin-top:28px; flex-wrap:wrap; }
+button { cursor:pointer; font:600 12px 'DM Sans',sans-serif; letter-spacing:.08em; }
+.draw-button { flex:1; padding:16px 20px; color:#170f18; background:var(--rose); border:1px solid var(--rose); text-transform:uppercase; }
+.draw-button:hover { background:#e6a9c4; }
+.draw-button span { margin-left:12px; }
+.reset-button { padding:16px; color:var(--muted); background:transparent; border:1px solid #ffffff30; }
+.reading-result { margin-top:34px; text-align:center; }
+.oracle-card { margin:18px auto; padding:32px 26px; max-width:470px; border:1px solid var(--gold); background:radial-gradient(ellipse at top,#422744,#17101b 72%); box-shadow:inset 0 0 40px #0005; }
+.card-symbol { font-size:36px; color:var(--gold); }
+.card-category { margin:14px 0; }
+.oracle-card h2 { font:500 27px 'Cinzel',serif; color:var(--rose); }
+.card-meaning,.card-prompt { line-height:1.8; color:#e3d5e0; }
+.card-divider { color:var(--gold); margin:22px; }
+.prompt-label { color:var(--gold); }
+.reversed { margin-top:22px; font-size:10px; letter-spacing:.16em; color:var(--rose); }
+.intensity-note { color:var(--muted); font-size:12px; margin:20px; }
+.secondary { width:100%; }
+footer { padding:45px 10px 35px; text-align:center; color:var(--muted); }
+footer span { color:var(--rose); }
+footer small { display:block; margin-top:10px; font-size:11px; }
+@media (max-width:600px) {
+  .page-shell { width:min(100% - 24px, 920px); }
+  .topbar { gap:12px; } .age-mark { font-size:8px; }
+  .hero { padding-top:55px; } .oracle-panel { padding:20px; }
+  .panel-heading { gap:12px; }
+}
