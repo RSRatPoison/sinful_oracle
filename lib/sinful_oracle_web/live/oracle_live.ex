@@ -1,5 +1,5 @@
 defmodule SinfulOracleWeb.OracleLive do
-  use Phoenix.LiveView, layout: {SinfulOracleWeb.Layouts, :root}
+  use Phoenix.LiveView
 
   alias SinfulOracle.Oracle.{Deck, Reading}
 
