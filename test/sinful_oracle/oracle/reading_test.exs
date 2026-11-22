@@ -101,4 +101,20 @@ defmodule SinfulOracle.Oracle.ReadingTest do
 
     assert Reading.interpretation(entry) == card.meaning
   end
+
+  test "the expanded deck contains exactly 24 cards" do
+    assert length(Deck.all()) == 24
+  end
+
+  test "every category contains four cards" do
+    for {_label, category} <- Deck.categories(), category != :all do
+      assert length(Deck.by_category(category)) == 4
+    end
+  end
+
+  test "every card has a unique identifier" do
+    ids = Enum.map(Deck.all(), & &1.id)
+
+    assert length(Enum.uniq(ids)) == length(ids)
+  end
 end
