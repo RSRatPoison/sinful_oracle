@@ -59,3 +59,86 @@ footer small { display:block; margin-top:10px; font-size:11px; }
   .hero { padding-top:55px; } .oracle-panel { padding:20px; }
   .panel-heading { gap:12px; }
 }
+
+/* Three-card oracle spread */
+
+.spread-intro {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.7;
+  margin: 12px auto 24px;
+}
+
+.spread-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  align-items: stretch;
+}
+
+.spread-grid .oracle-card {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-position {
+  display: inline-block;
+  align-self: center;
+  margin: 0 0 16px;
+  padding: 7px 14px;
+  border: 1px solid #c7a56a88;
+  color: var(--gold);
+  font: 11px 'Cinzel', serif;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.spread-grid .oracle-card h2 {
+  font-size: 21px;
+  line-height: 1.4;
+}
+
+.spread-grid .card-meaning,
+.spread-grid .card-prompt {
+  font-size: 13px;
+}
+
+.spread-grid .card-divider {
+  margin: 18px 0;
+}
+
+.intensity-guidance {
+  margin: 26px auto;
+  max-width: 520px;
+  padding: 18px;
+  border-top: 1px solid #c7a56a55;
+  border-bottom: 1px solid #c7a56a55;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.intensity-guidance p:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 760px) {
+  .spread-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .spread-grid .oracle-card {
+    max-width: 470px;
+    margin: 0 auto;
+    padding: 28px 24px;
+  }
+
+  .spread-grid .oracle-card h2 {
+    font-size: 25px;
+  }
+}
+
