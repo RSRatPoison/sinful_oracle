@@ -137,14 +137,14 @@ defmodule SinfulOracleWeb.OracleLive do
               <h2>{entry.card.name}</h2>
 
               <p class="card-meaning">
-                {Reading.interpretation(entry)}
+                {Reading.interpretation(entry, @intensity)}
               </p>
 
               <div class="card-divider">✦</div>
 
               <p class="prompt-label">YOUR FICTIONAL PROMPT</p>
 
-              <p class="card-prompt">{entry.card.prompt}</p>
+              <p class="card-prompt">{Reading.prompt(entry, @intensity)}</p>
 
               <p class="reversed" :if={entry.reversed?}>
                 REVERSED · Read the shadow, too.
