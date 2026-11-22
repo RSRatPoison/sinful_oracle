@@ -45,7 +45,7 @@ defmodule SinfulOracle.Oracle.ReadingTest do
     assert Reading.intensity_label(:wicked) == "Wicked"
   end
 
-  test "each intensity has its own guidance" do
+  test "each intensity has its own general guidance" do
     assert Reading.intensity_guidance(:teasing) !=
              Reading.intensity_guidance(:sultry)
 
@@ -53,11 +53,46 @@ defmodule SinfulOracle.Oracle.ReadingTest do
              Reading.intensity_guidance(:wicked)
   end
 
+  test "intensity changes the fictional prompt for every card" do
+    Enum.each(Deck.all(), fn card ->
+      entry = %{card: card}
+
+      prompts =
+        Enum.map(Reading.intensities(), fn intensity ->
+          Reading.prompt(entry, intensity)
+        end)
+
+      assert length(Enum.uniq(prompts)) == 3
+    end)
+  end
+
+  test "intensity changes the interpretation for every card" do
+    Enum.each(Deck.all(), fn card ->
+      entry = %{card: card, reversed?: false}
+
+      interpretations =
+        Enum.map(Reading.intensities(), fn intensity ->
+          Reading.interpretation(entry, intensity)
+        end)
+
+      assert length(Enum.uniq(interpretations)) == 3
+    end)
+  end
+
   test "reversed cards use their reversed meaning" do
     card = hd(Deck.all())
     entry = %{card: card, reversed?: true}
 
     assert Reading.interpretation(entry) == card.reversed_meaning
+  end
+
+  test "intensity variations preserve reversed meanings" do
+    card = hd(Deck.all())
+    entry = %{card: card, reversed?: true}
+
+    result = Reading.interpretation(entry, :wicked)
+
+    assert String.starts_with?(result, card.reversed_meaning)
   end
 
   test "upright cards use their regular meaning" do
