@@ -135,9 +135,15 @@ defmodule SinfulOracle.Oracle.Reading do
   def intensity_guidance(_), do: intensity_guidance(:teasing)
 
   def prompt(%{card: card}, intensity) do
-    card_prompts = Map.get(@intensity_prompts, card.category, %{})
-    Map.get(card_prompts, intensity, card.prompt)
+  card_prompts = Map.get(@intensity_prompts, card.category, %{})
+  intensity_prompt = Map.get(card_prompts, intensity)
+
+  if intensity_prompt do
+    card.prompt <> "\n\n" <> intensity_prompt
+  else
+    card.prompt
   end
+end
 
   def interpretation(%{card: card, reversed?: true}) do
     card.reversed_meaning || card.meaning
