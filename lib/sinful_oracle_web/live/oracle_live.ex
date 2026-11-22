@@ -1,3 +1,4 @@
+
 defmodule SinfulOracleWeb.OracleLive do
   use Phoenix.LiveView
 
@@ -16,24 +17,37 @@ defmodule SinfulOracleWeb.OracleLive do
 
   @impl true
   def handle_event("category", %{"category" => category}, socket) do
-    {:noreply, assign(socket, :category, String.to_existing_atom(category))}
-  rescue
-    ArgumentError -> {:noreply, socket}
+    selected =
+      Enum.find_value(Deck.categories(), socket.assigns.category, fn {_label, value} ->
+        if Atom.to_string(value) == category, do: value
+      end)
+
+    {:noreply, assign(socket, :category, selected)}
   end
 
   def handle_event("intensity", %{"intensity" => intensity}, socket) do
-    {:noreply, assign(socket, :intensity, String.to_existing_atom(intensity))}
-  rescue
-    ArgumentError -> {:noreply, socket}
+    selected =
+      Enum.find(Reading.intensities(), socket.assigns.intensity, fn value ->
+        Atom.to_string(value) == intensity
+      end)
+
+    {:noreply, assign(socket, :intensity, selected)}
   end
 
   def handle_event("draw", _params, socket) do
-    reading = Reading.draw(socket.assigns.category, 1)
-    {:noreply, socket |> assign(:reading, reading) |> assign(:drawn?, true)}
+    reading = Reading.draw(socket.assigns.category, 3)
+
+    {:noreply,
+     socket
+     |> assign(:reading, reading)
+     |> assign(:drawn?, true)}
   end
 
   def handle_event("reset", _params, socket) do
-    {:noreply, socket |> assign(:reading, []) |> assign(:drawn?, false)}
+    {:noreply,
+     socket
+     |> assign(:reading, [])
+     |> assign(:drawn?, false)}
   end
 
   @impl true
@@ -63,7 +77,11 @@ defmodule SinfulOracleWeb.OracleLive do
         <form phx-change="category" class="control-group">
           <label for="category">Choose your omen</label>
           <select id="category" name="category">
-            <option :for={{label, value} <- @categories} value={value} selected={value == @category}>
+            <option
+              :for={{label, value} <- @categories}
+              value={value}
+              selected={value == @category}
+            >
               {label}
             </option>
           </select>
@@ -72,37 +90,86 @@ defmodule SinfulOracleWeb.OracleLive do
         <form phx-change="intensity" class="control-group">
           <label for="intensity">Set the temperature</label>
           <select id="intensity" name="intensity">
-            <option value="teasing" selected={@intensity == :teasing}>Teasing · playful sparks</option>
-            <option value="sultry" selected={@intensity == :sultry}>Sultry · slow-burn tension</option>
-            <option value="wicked" selected={@intensity == :wicked}>Wicked · adult themes</option>
+            <option value="teasing" selected={@intensity == :teasing}>
+              Teasing · playful sparks
+            </option>
+            <option value="sultry" selected={@intensity == :sultry}>
+              Sultry · slow-burn tension
+            </option>
+            <option value="wicked" selected={@intensity == :wicked}>
+              Wicked · adult themes
+            </option>
           </select>
         </form>
 
         <div class="actions">
-          <button class="draw-button" phx-click="draw">Draw your card <span>↗</span></button>
-          <button :if={@drawn?} class="reset-button" phx-click="reset">Clear reading</button>
+          <button class="draw-button" phx-click="draw">
+            Draw your three cards <span>↗</span>
+          </button>
+          <button :if={@drawn?} class="reset-button" phx-click="reset">
+            Clear reading
+          </button>
         </div>
 
         <section :if={@drawn?} class="reading-result" aria-live="polite">
           <p class="eyebrow">✦ THE ORACLE HAS SPOKEN ✦</p>
-          <article :for={entry <- @reading} class="oracle-card">
-            <div class="card-symbol">✧</div>
-            <p class="card-category">{entry.card.category |> Atom.to_string() |> String.upcase()}</p>
-            <h2>{entry.card.name}</h2>
-            <p class="card-meaning">{Reading.interpretation(entry)}</p>
-            <div class="card-divider">✦</div>
-            <p class="prompt-label">YOUR FICTIONAL PROMPT</p>
-            <p class="card-prompt">{entry.card.prompt}</p>
-            <p class="reversed" :if={entry.reversed?}>REVERSED · Read the shadow, too.</p>
-          </article>
-          <p class="intensity-note">Reading intensity: {Reading.intensity_label(@intensity)}</p>
-          <button class="draw-button secondary" phx-click="draw">Draw again ↻</button>
+
+          <p class="spread-intro">
+            Three cards. Three moments. One story waiting to unfold.
+          </p>
+
+          <div class="spread-grid">
+            <article
+              :for={entry <- @reading}
+              class="oracle-card"
+              data-position={entry.position}
+            >
+              <p class="card-position">
+                {Reading.position_label(entry.position)}
+              </p>
+
+              <div class="card-symbol">✧</div>
+
+              <p class="card-category">
+                {entry.card.category |> Atom.to_string() |> String.upcase()}
+              </p>
+
+              <h2>{entry.card.name}</h2>
+
+              <p class="card-meaning">
+                {Reading.interpretation(entry)}
+              </p>
+
+              <div class="card-divider">✦</div>
+
+              <p class="prompt-label">YOUR FICTIONAL PROMPT</p>
+
+              <p class="card-prompt">{entry.card.prompt}</p>
+
+              <p class="reversed" :if={entry.reversed?}>
+                REVERSED · Read the shadow, too.
+              </p>
+            </article>
+          </div>
+
+          <div class="intensity-guidance">
+            <p class="intensity-note">
+              Reading intensity: {Reading.intensity_label(@intensity)}
+            </p>
+            <p>{Reading.intensity_guidance(@intensity)}</p>
+          </div>
+
+          <button class="draw-button secondary" phx-click="draw">
+            Draw again ↻
+          </button>
         </section>
       </section>
 
       <footer>
         <p>Made for every shade of becoming. <span>♡</span></p>
-        <small>All characters and scenarios are fictional adults. Consent is not optional.</small>
+        <small>
+          All characters and scenarios are fictional adults. Consent is not optional.
+        </small>
       </footer>
     </main>
     """
